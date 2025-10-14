@@ -113,8 +113,8 @@
 
 #STUDY KASUS 
 
-keranjang=["Brokoli","Apel","Jamur","Nanas","Wortel","kiwi","kol","sawi","Lobak"]
+# keranjang=["Brokoli","Apel","Jamur","Nanas","Wortel","kiwi","kol","sawi","Lobak"]
 
-for i in keranjang:
-    for keranjang in i:
-        print(keranjang)
+# for i in keranjang:
+#     for keranjang in i:
+#         print(keranjang)
