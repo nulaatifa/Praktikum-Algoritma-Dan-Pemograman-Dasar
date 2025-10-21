@@ -82,7 +82,7 @@ while True:
         if Pilih == "1":
             print(f"====== DAFTAR FILM {Nama_Kategori.upper()} ======")
             print("Kode\t\tJudul\t\t\tStatus")
-            print("----------------------------------------------------------------")
+            print(" ----------------------------------------------------------------")
             for Film in Film_List:
                 print(f"{Film[0]}\t {Film[1]:25} \t{Film[2]}")
             input("Tekan Enter Untuk Kembali Ke Menu Kategori...")
