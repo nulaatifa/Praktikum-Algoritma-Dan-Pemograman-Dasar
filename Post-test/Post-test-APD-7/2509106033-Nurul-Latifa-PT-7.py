@@ -2,9 +2,10 @@
 import os
 from time import sleep
 
-Akun = { 
+
+Akun = {
     "Admin" : {"Password" : "0090", "Role" : "Admin"},
-    "User"  : {"Password" : "8809", "Role" : "User"}
+    "User" : {"Password" : "8809", "Role" : "User"}
 }
 
 film_data = {
@@ -38,19 +39,19 @@ film_data = {
     }
 }
 
-
-
 Role = None
 Username = None
 
 
+
 def tampilkan_kategori():
-    print("\nMENU FILM:")
+    print("\nMENU KATEGORI FILM:")
     for i, kategori in enumerate(film_data.keys(), start=1):
         print(f"{i}. {kategori}")
 
 def tampilkan_daftar_film(kategori):
     try:
+        os.system("cls" if os.name == "nt" else "clear")
         print(f"\nDAFTAR FILM {kategori.upper()}")
         print("Kode\tJudul Film\t\t\tStatus")
         print("-------------------------------------------")
@@ -58,21 +59,21 @@ def tampilkan_daftar_film(kategori):
             print(f"{kode}\t{data['judul']:25}\t{data['status']}")
     except KeyError:
         print("Kategori tidak ditemukan!")
-
+    input("Tekan Enter untuk kembali...")
 
 def tambah_film(kategori):
     global film_data
     kode = input("Masukkan kode film baru: ")
     if kode in film_data[kategori]:
-        print("Kode sudah ada.")
+        print("Kode film sudah ada.")
     else:
         judul = input("Masukkan judul film: ")
         film_data[kategori][kode] = {"judul": judul, "status": "Tersedia"}
         print(f"Film '{judul}' berhasil ditambahkan!")
 
-
 def hapus_film(kategori):
     global film_data
+    
     kode = input("Masukkan kode film yang ingin dihapus: ")
     if kode in film_data[kategori]:
         judul = film_data[kategori][kode]["judul"]
@@ -81,15 +82,13 @@ def hapus_film(kategori):
     else:
         print("Kode film tidak ditemukan.")
 
-
-def countdown(n):
-    if n == 0:
+def countdown(n):  
+    if n == 0: 
         print("Logout berhasil!\n")
         return
     print(f"Logout dalam {n} detik...")
     sleep(1)
     countdown(n - 1)
-
 
 def login():
     global Username, Role
@@ -132,7 +131,7 @@ def login():
                 exit()
 
             else:
-                raise ValueError("Pilihan tidak valid!")
+                raise ValueError("Pilihan tidak valid!") 
 
         except ValueError as e:
             print(f"Error: {e}")
@@ -147,18 +146,19 @@ def menu_utama():
         print("5. Logout")
         pilihan = input("Pilih kategori (1-5): ")
 
-        kategori_dict = {"1": "Studio Ghibli", "2": "Marvel Studio"}
+        kategori_keys = list(film_data.keys())
+        kategori_dict = {str(i+1): kategori_keys[i] for i in range(len(kategori_keys))}
+
         if pilihan in kategori_dict:
             kategori = kategori_dict[pilihan]
         elif pilihan == "5":
-            countdown(5)  
+            countdown(5)
             break
         else:
             print("Pilihan tidak valid!")
             input("Tekan Enter untuk lanjut...")
             continue
 
-       
         while True:
             os.system("cls" if os.name == "nt" else "clear")
             print(f"===== MENU {kategori.upper()} =====")
@@ -173,13 +173,9 @@ def menu_utama():
                 print("4. Kembali")
 
             pilih_kat = input("Pilih menu: ")
-
             
             kode = ""
             judul = ""
-            status = ""
-            pilihan_menu = pilih_kat
-            kategori_aktif = kategori
 
             try:
                 if pilih_kat == "1":
@@ -195,6 +191,7 @@ def menu_utama():
                             print("Film sedang disewa orang lain.")
                     else:
                         print("Kode film tidak ditemukan.")
+                    input("Tekan Enter untuk kembali...")
 
                 elif pilih_kat == "3":
                     kode = input("Masukkan kode film: ")
@@ -206,26 +203,31 @@ def menu_utama():
                             print("Film belum disewa.")
                     else:
                         print("Kode film tidak ditemukan.")
+                    input("Tekan Enter untuk kembali...")
 
                 elif pilih_kat == "4" and Role == "Admin":
                     tambah_film(kategori)
+                    input("Tekan Enter untuk kembali...")
 
                 elif pilih_kat == "5" and Role == "Admin":
                     hapus_film(kategori)
+                    input("Tekan Enter untuk kembali...")
 
                 elif (pilih_kat == "4" and Role == "User") or (pilih_kat == "6" and Role == "Admin"):
                     break
 
                 else:
                     print("Pilihan tidak valid.")
+                    input("Tekan Enter untuk kembali...")
+            
             except Exception as e:
                 print(f"Terjadi kesalahan: {e}")
+                input("Tekan Enter untuk kembali...")
 
-            input("Tekan Enter untuk kembali...")
 
+if __name__ == "__main__":
+    login()
+    menu_utama()
 
-login()
-menu_utama()
-
-sleep(5)
-os.system("cls" if os.name == "nt" else "clear")
+    sleep(1)
+    os.system("cls" if os.name == "nt" else "clear")
